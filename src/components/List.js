@@ -1,8 +1,10 @@
 import React from 'react'
 
-const List = ({
+const List = React.memo(({
     id, title, completed, todoData, setTodoData, provided, snapshot
 }) => {
+    console.log('List Component')
+
     const handleCompleteChange = (id) => {
         let newTodoData = todoData.map(data => {
           if(data.id === id) {
@@ -40,7 +42,7 @@ const List = ({
             <button className='px-4 py-2 float-right' onClick={() => handleClick(id)}>x</button>
             </div>
     </div>
-  )
-}
+  );
+});
 
 export default List
