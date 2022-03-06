@@ -1,23 +1,24 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
+import ClearAll from "./components/ClearAll";
 import Form from "./components/Form";
 import Lists from "./components/Lists";
 
 export default function App() {
-  console.log('App Component')
+  console.log("App Component");
 
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
 
   const handleClick = useCallback(
     (id) => {
-    let newTodoData = todoData.filter(data => data.id !== id);
-    console.log('newTodoData', newTodoData);
-    setTodoData(newTodoData)
-  },
-  [todoData]
+      let newTodoData = todoData.filter((data) => data.id !== id);
+      console.log("newTodoData", newTodoData);
+      setTodoData(newTodoData);
+    },
+    [todoData]
   );
-  
+
   const handleSubmit = (e) => {
     //페이지 리로드 막아줌
     e.preventDefault();
@@ -30,7 +31,7 @@ export default function App() {
     };
 
     //원래 있던 할 일에 새로운 할 일 더해주기
-    setTodoData(prev => [...prev, newTodo]);
+    setTodoData((prev) => [...prev, newTodo]);
     setValue("");
   };
 
@@ -39,12 +40,16 @@ export default function App() {
       <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
         <div className="flex justify-between mb-3">
           <h1>할일 목록</h1>
+          <ClearAll setTodoData={setTodoData} />
         </div>
-        <Lists handleClick={handleClick} todoData={todoData} setTodoData={setTodoData}/>
+        <Lists
+          handleClick={handleClick}
+          todoData={todoData}
+          setTodoData={setTodoData}
+        />
 
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
-
       </div>
     </div>
-  )
+  );
 }
