@@ -31,18 +31,24 @@ const List = React.memo(
     };
 
     const handleSaved = (id) => {
-      if (title !== editTitle)
-      {
+      if (title !== editTitle) {
         let newTodoData = todoData.map((data) => {
           if (data.id === id) {
             data.title = editTitle;
           }
           return data;
         });
-  
+
         setTodoData(newTodoData);
       }
-    }
+    };
+
+    const handleEnter = (e) => {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        e.target.blur();
+      }
+    };
 
     return (
       <div
@@ -68,6 +74,7 @@ const List = React.memo(
             name="value"
             value={editTitle}
             onChange={handleEdit}
+            onKeyDown={handleEnter}
             onBlur={() => handleSaved(id)}
           ></input>
         </div>
