@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const List = React.memo(
   ({
@@ -13,6 +13,8 @@ const List = React.memo(
   }) => {
     console.log("List Component");
 
+    const [editTitle, setEditTitle] = useState(title);
+
     const handleCompleteChange = (id) => {
       let newTodoData = todoData.map((data) => {
         if (data.id === id) {
@@ -23,6 +25,24 @@ const List = React.memo(
 
       setTodoData(newTodoData);
     };
+
+    const handleEdit = (e) => {
+      setEditTitle(e.target.value);
+    };
+
+    const handleSaved = (id) => {
+      if (title !== editTitle)
+      {
+        let newTodoData = todoData.map((data) => {
+          if (data.id === id) {
+            data.title = editTitle;
+          }
+          return data;
+        });
+  
+        setTodoData(newTodoData);
+      }
+    }
 
     return (
       <div
@@ -40,9 +60,16 @@ const List = React.memo(
             defaultChecked={false}
             onChange={() => handleCompleteChange(id)}
           />
-          <span className={completed ? "line-through" : undefined}>
-            {title}
-          </span>
+          <input
+            className={`${
+              completed ? "line-through" : undefined
+            } bg-gray-100 px-2 mx-2`}
+            type="text"
+            name="value"
+            value={editTitle}
+            onChange={handleEdit}
+            onBlur={() => handleSaved(id)}
+          ></input>
         </div>
         <div className="items-center">
           <button
