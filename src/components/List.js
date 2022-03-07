@@ -63,7 +63,7 @@ const List = React.memo(
         <div className="items-center">
           <input
             type="checkbox"
-            defaultChecked={false}
+            defaultChecked={completed ? true : false}
             onChange={() => handleCompleteChange(id)}
           />
           <input

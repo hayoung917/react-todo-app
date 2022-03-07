@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import ClearAll from "./components/ClearAll";
 import Form from "./components/Form";
@@ -9,6 +9,17 @@ export default function App() {
 
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    const todoData = JSON.parse(localStorage.getItem("todoData"));
+    if (todoData) {
+      setTodoData(todoData);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todoData", JSON.stringify(todoData));
+  }, [todoData]);
 
   const handleClick = useCallback(
     (id) => {
